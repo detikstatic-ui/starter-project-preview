@@ -11,14 +11,6 @@ import NavLink from "@/components/NavLink.astro"
 <MainLayout title="Starter Project." description="Welcome to Starter Project!">
     <Grid className="mb-8" sidebarClassName="gap-4">
         <Heading size="h3" tagType="h2">Test heading</Heading>
-        <label class="swap swap-flip text-9xl">
-  
-            <!-- this hidden checkbox controls the state -->
-            <input type="checkbox" />
-            
-            <div class="swap-on">😈</div>
-            <div class="swap-off">😇</div>
-          </label>
         <div class="flex items-end gap-2">
             <NavLink href={BASE_URL}>Home</NavLink>
             <ButtonOrLink as="a" href="#" variant={"default"} size={"xs"}>xs Default</ButtonOrLink>
