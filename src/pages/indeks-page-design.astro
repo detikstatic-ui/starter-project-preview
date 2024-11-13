@@ -1,31 +1,10 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro"
-
-const posts = await Astro.glob("./*.astro")
-const postURLs = posts.map((post) => {
-    const urlPath = post.default.moduleId
-    const url = urlPath?.substring(urlPath.lastIndexOf("/") + 1, urlPath.lastIndexOf(".")) + ".html"
-    return url
-})
+import IndeksPageDesignList from "@/components/IndeksPageDesign"
 ---
 
-<MainLayout title="Starter Project." description="Welcome to Starter Project!">
+<MainLayout>
     <div class="px-4">
-        <ul class="my-6 rounded border px-5">
-            {
-                postURLs
-                    .sort()
-                    .reverse()
-                    .map((url) => {
-                        return (
-                            <li class="border-b px-3 py-2 transition-all last:border-b-0">
-                                <a href={url} class="grid" target="_blank">
-                                    {url}
-                                </a>
-                            </li>
-                        )
-                    })
-            }
-        </ul>
+        <IndeksPageDesignList client:only="react" />
     </div>
 </MainLayout>
