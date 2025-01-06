@@ -5,7 +5,7 @@ const IndeksPageDesign = () => {
     const [error, setError] = useState(null)
 
     // Define your manually added URLs
-    const manualUrls = ["404"] // Add more URLs as needed
+    const manualUrls = ["404.html"] // Add more URLs as needed
 
     // Define URLs to exclude
     const excludeUrls = ["indeks-page-design"] // Add more URLs to exclude as needed

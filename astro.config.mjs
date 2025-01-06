@@ -1,8 +1,8 @@
+import alpinejs from "@astrojs/alpinejs"
+import react from "@astrojs/react"
 import sitemap from "@astrojs/sitemap"
 import tailwind from "@astrojs/tailwind"
 import { defineConfig } from "astro/config"
-
-import react from "@astrojs/react";
 
 // https://astro.build/config
 export default defineConfig({
@@ -19,10 +19,15 @@ export default defineConfig({
             },
         },
     },
-    integrations: [sitemap(), tailwind({
-        applyBaseStyles: false,
-    }), react()],
-    build: {        
+    integrations: [
+        sitemap(),
+        tailwind({
+            applyBaseStyles: false,
+        }),
+        react(),
+        alpinejs({ entrypoint: "/src/entrypoint" }),
+    ],
+    build: {
         assets: "_assets",
         inlineStylesheets: "never",
     },
