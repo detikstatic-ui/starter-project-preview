@@ -5,94 +5,22 @@ import MainLayout from "@/layouts/MainLayout.astro"
 import ButtonOrLink from "@/components/ui/ButtonOrLink.astro"
 import Grid from "@/components/ui/Grid.astro"
 import Heading from "@/components/ui/Heading.astro"
+import Accordion from "@/components/Accordion.astro"
+import ModalDialog from "@/components/ModalDialog.astro"
 import NavLink from "@/components/NavLink.astro"
+import Swap from "@/components/Swap.astro"
 ---
 
 <MainLayout>
-    <Grid className="mb-8" sidebarClassName="gap-4">
-        <Heading size="h3" tagType="h2">Test heading</Heading>
-        <div class="flex items-end gap-2">
+    <Grid className="mb-8 bg-linear-180" sidebarClassName="gap-4">
+        <Heading size="h3" tagType="h2">Test heading Component</Heading>
+        <div class="mb-4 flex items-end gap-2">
             <NavLink href={BASE_URL}>Home</NavLink>
             <ButtonOrLink as="a" href="#" variant={"default"} size={"xs"}>xs Default</ButtonOrLink>
             <ButtonOrLink as="button" type="button" variant={"dark"} size={"sm"}>sm Dark</ButtonOrLink>
-            <!-- Open the modal using ID.showModal() method -->
-            <button class="btn" onclick="my_modal_2.showModal()">open modal</button>
-            <dialog id="my_modal_2" class="modal">
-                <div class="modal-box">
-                    <h3 class="text-lg font-bold">Hello!</h3>
-                    <p class="py-4">Press ESC key or click outside to close</p>
-                </div>
-                <form method="dialog" class="modal-backdrop">
-                    <button>close</button>
-                </form>
-            </dialog>
+            <ModalDialog />
+            <Swap />
         </div>
-        <div
-            x-data="{ 
-        activeAccordion: '', 
-        setActiveAccordion(id) { 
-            this.activeAccordion = (this.activeAccordion == id) ? '' : id 
-        } 
-    }"
-            class="relative mx-auto w-full divide-y divide-gray-200 overflow-hidden rounded-md border border-gray-200 bg-white text-sm font-normal text-black"
-        >
-            <div x-data="{ id: $id('accordion') }" class="group cursor-pointer">
-                <button @click="setActiveAccordion(id)" class="flex w-full select-none items-center justify-between p-4 text-left group-hover:underline">
-                    <span>What is Pines?</span>
-                    <svg
-                        class="h-4 w-4 duration-200 ease-out"
-                        :class="{ 'rotate-180': activeAccordion==id }"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg
-                    >
-                </button>
-                <div x-show="activeAccordion==id" x-collapse="" style="display: none; height: 0px; overflow: hidden;" hidden="">
-                    <div class="p-4 pt-0 opacity-70">Pines is a UI library built for AlpineJS and TailwindCSS.</div>
-                </div>
-            </div>
-            <div x-data="{ id: $id('accordion') }" class="group cursor-pointer">
-                <button @click="setActiveAccordion(id)" class="flex w-full select-none items-center justify-between p-4 text-left group-hover:underline">
-                    <span>How do I install Pines?</span>
-                    <svg
-                        class="h-4 w-4 duration-200 ease-out"
-                        :class="{ 'rotate-180': activeAccordion==id }"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg
-                    >
-                </button>
-                <div x-show="activeAccordion==id" x-collapse="" style="display: none; height: 0px; overflow: hidden;" hidden="">
-                    <div class="p-4 pt-0 opacity-70">Add AlpineJS and TailwindCSS to your page and then copy and paste any of these elements into your project.</div>
-                </div>
-            </div>
-            <div x-data="{ id: $id('accordion') }" class="group cursor-pointer">
-                <button @click="setActiveAccordion(id)" class="flex w-full select-none items-center justify-between p-4 text-left group-hover:underline">
-                    <span>Can I use Pines with other libraries or frameworks?</span>
-                    <svg
-                        class="h-4 w-4 duration-200 ease-out"
-                        :class="{ 'rotate-180': activeAccordion==id }"
-                        viewBox="0 0 24 24"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg
-                    >
-                </button>
-                <div x-show="activeAccordion==id" x-collapse="" style="display: none; height: 0px; overflow: hidden;" hidden="">
-                    <div class="p-4 pt-0 opacity-70">Absolutely! Pines works with any other library or framework. Pines works especially well with the TALL stack.</div>
-                </div>
-            </div>
-        </div>
+        <Accordion />
     </Grid>
 </MainLayout>
