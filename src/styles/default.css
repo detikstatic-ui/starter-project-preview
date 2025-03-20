@@ -1,5 +1,5 @@
 @theme {
-    --font-sans: "Montserrat", "Montserrat-fallback";
+    --font-sans: "Montserrat", "Montserrat-fallback", "sans-serif";
 
     /* Black */
     --color-black-nightblack: oklch(0.14 0 0); /* #232323 */

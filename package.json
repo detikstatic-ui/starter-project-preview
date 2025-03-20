@@ -14,6 +14,7 @@
     },
     "dependencies": {
         "@alpinejs/collapse": "^3.14.9",
+        "@alpinejs/focus": "^3.14.9",
         "@alpinejs/intersect": "^3.14.9",
         "@astrojs/alpinejs": "^0.4.3",
         "@astrojs/check": "^0.9.4",
