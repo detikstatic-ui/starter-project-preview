@@ -4,6 +4,7 @@ import "@/styles/globals.css"
 import { SITE_DESCRIPTION, SITE_TITLE } from "@/consts"
 
 import BaseHead from "@/components/BaseHead.astro"
+import Footer from "@/components/Footer.astro"
 import Header from "@/components/Header.astro"
 
 interface Props {
@@ -20,8 +21,9 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props
     </head>
     <body class="flex min-h-screen flex-col bg-white">
         <Header />
-        <main class="mx-auto w-full max-w-6xl flex-1 pt-5">
+        <main class="isolate mx-auto w-full max-w-7xl flex-1 pt-5">
             <slot />
         </main>
+        <Footer />
     </body>
 </html>
