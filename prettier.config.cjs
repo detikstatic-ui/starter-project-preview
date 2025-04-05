@@ -30,6 +30,7 @@ module.exports = {
     importOrderMergeDuplicateImports: true,
     importOrderCombineTypeAndValueImports: true,
     plugins: ["@ianvs/prettier-plugin-sort-imports", "prettier-plugin-astro", "prettier-plugin-tailwindcss"],
+    tailwindFunctions: ["tv"],
     overrides: [
         {
             files: "*.astro",
