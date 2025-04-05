@@ -3,6 +3,7 @@ import { Image } from "astro:assets"
 import { tv } from "tailwind-variants"
 
 import MainLayout from "@/layouts/MainLayout.astro"
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/avatar"
 import Button from "@/components/button"
 import ModalDialog from "@/components/ModalDialog.astro"
 
@@ -11,7 +12,7 @@ const article = tv({
         articleWrapper: "flex flex-col items-start justify-between",
         imageWrapper: "relative w-full",
         imageArticle: "aspect-video w-full rounded-2xl bg-gray-100 object-cover sm:aspect-2/1 lg:aspect-3/2",
-        imageOverlay: "absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset pointer-events-none",
+        imageOverlay: "pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-gray-900/10 ring-inset",
         content: "max-w-xl",
         date: "mt-8 flex items-center gap-x-4 text-xs",
         dateTime: "text-gray-500",
@@ -54,8 +55,8 @@ const { authorWrapper, authorImage, authorName, authorNameText, authorNameLink, 
                     <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl">
                         <div class="hidden sm:mb-10 sm:flex">
                             <div class="relative rounded-full px-3 py-1 text-sm/6 text-gray-500 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                                Anim aute id magna aliqua ad ad non deserunt sunt. <a href="#" class="font-semibold whitespace-nowrap text-indigo-600"
-                                    ><span class="absolute inset-0" aria-hidden="true"></span>Read more <span aria-hidden="true">&rarr;</span></a
+                                Anim aute id magna aliqua ad ad non deserunt sunt. <a href="#" class="font-semibold whitespace-nowrap text-indigo-600">
+                                    <span class="absolute inset-0" aria-hidden="true"></span>Read more <span aria-hidden="true">&rarr;</span></a
                                 >
                             </div>
                         </div>
@@ -63,16 +64,53 @@ const { authorWrapper, authorImage, authorName, authorNameText, authorNameLink, 
                         <p class="mt-8 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">
                             Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.
                         </p>
-                        <div class="mt-10 flex items-center gap-x-6">
-                            <Button
-                                variant="secondary"
-                                class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                                href="#"
-                            >
-                                Get Started
-                            </Button>
+                        <div class="mt-10 flex flex-wrap items-center gap-6">
+                            <ModalDialog>
+                                <Button
+                                    variant="secondary"
+                                    class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                                    @click="modalOpen=true"
+                                    type="button"
+                                    aria-label="Open Modal"
+                                    slot={"trigger"}
+                                >
+                                    Get Started
+                                </Button>
+                                <section>
+                                    <div class="flex items-center justify-between pb-3 dark:text-black">
+                                        <h3 class="text-lg font-semibold">Modal Title</h3>
+                                        <button
+                                            @click="modalOpen=false"
+                                            class="absolute top-0 right-0 mt-5 mr-5 flex h-8 w-8 items-center justify-center rounded-full text-gray-600 hover:bg-gray-50 hover:text-gray-800"
+                                        >
+                                            <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"></path>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="relative w-auto pb-8 dark:text-black">
+                                        <p>This is placeholder text. Replace it with your own content.</p>
+                                    </div>
+                                    <div class="flex flex-col-reverse sm:flex-row sm:justify-between sm:space-x-2">
+                                        <button
+                                            @click="modalOpen=false"
+                                            type="button"
+                                            class="inline-flex h-10 items-center justify-center rounded-md border px-4 py-2 text-sm font-medium transition-colors focus:ring-2 focus:ring-neutral-100 focus:ring-offset-2 focus:outline-hidden"
+                                        >
+                                            Previous
+                                        </button>
+                                        <button
+                                            @click="modalOpen=false"
+                                            type="button"
+                                            class="inline-flex h-10 items-center justify-center rounded-md border border-transparent bg-neutral-950 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-neutral-900 focus:ring-2 focus:ring-neutral-900 focus:ring-offset-2 focus:outline-hidden"
+                                        >
+                                            Next
+                                        </button>
+                                    </div>
+                                </section>
+                            </ModalDialog>
+
                             <Button href="#" variant="ghost" class="text-sm/6 font-semibold text-gray-900">Learn more <span aria-hidden="true">→</span></Button>
-                            <ModalDialog />
                         </div>
                     </div>
                 </div>
@@ -157,7 +195,11 @@ const { authorWrapper, authorImage, authorName, authorNameText, authorNameLink, 
                                     <p class={description()}>{item.description}</p>
                                 </div>
                                 <div class={authorWrapper()}>
-                                    <img src={item.authorImage} alt="" class={authorImage()} />
+                                    <Avatar class={authorImage({ class: "border-0" })}>
+                                        <AvatarImage src={item.authorImage} alt={item.authorName} />
+                                        <AvatarFallback>UI</AvatarFallback>
+                                    </Avatar>
+
                                     <div class={authorName()}>
                                         <p class={authorNameText()}>
                                             <a href="#">
