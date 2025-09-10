@@ -171,32 +171,26 @@
     h1 {
         font-size: var(--text-4xl);
         font-weight: var(--font-weight-semibold);
-        color: var(--color-gray-950);
     }
     h2 {
         font-size: var(--text-3xl);
         font-weight: var(--font-weight-semibold);
-        color: var(--color-gray-950);
     }
     h3 {
         font-size: var(--text-2xl);
         font-weight: var(--font-weight-semibold);
-        color: var(--color-gray-950);
     }
     h4 {
         font-size: var(--text-xl);
         font-weight: var(--font-weight-semibold);
-        color: var(--color-gray-950);
     }
     h5 {
         font-size: var(--text-lg);
         font-weight: var(--font-weight-semibold);
-        color: var(--color-gray-950);
     }
     h6 {
         font-size: var(--text-base);
         font-weight: var(--font-weight-semibold);
-        color: var(--color-gray-950);
     }
 }
 
@@ -205,6 +199,10 @@
 }
 
 @utility scrollbar-hidden {
+    /*FireFox*/
+    scrollbar-width: none;
+    /*IE10+*/
+    -ms-overflow-style: -ms-autohiding-scrollbar;
     &::-webkit-scrollbar {
         display: none;
     }
