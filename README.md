@@ -1,3 +1,7 @@
+# starter-project
+
+**Preview:** https://design.detik.com/starter-project/
+
 ## For Tailwind Variant
 
 If you are using VSCode and the TailwindCSS IntelliSense Extension, you have to add the following to your settings.json file.
