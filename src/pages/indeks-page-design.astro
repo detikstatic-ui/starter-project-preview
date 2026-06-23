@@ -1,10 +1,93 @@
 ---
 import MainLayout from "@/layouts/MainLayout.astro"
-import IndeksPageDesignList from "@/components/IndeksPageDesign"
+
+import { BASE_URL } from "@/consts"
 ---
 
 <MainLayout>
     <div class="px-4">
-        <IndeksPageDesignList client:only="react" />
+        <ul id="indeks-list" class="divide-y rounded border p-4">
+            <li class="px-3 py-2 text-gray-400">Loading...</li>
+        </ul>
     </div>
 </MainLayout>
+
+<script is:inline define:vars={{ BASE_URL }}>
+    ;(function () {
+
+        // Define your manually added URLs
+        const manualUrls = ["404.html"] // Add more URLs as needed
+
+        // Define URLs to exclude
+        const excludeUrls = ["indeks-page-design"] // Add more URLs to exclude as needed
+
+        function urlExtract(url) {
+            const prefix = BASE_URL
+            if (!url.includes(prefix)) {
+                return url
+            }
+            const lastIndex = url.lastIndexOf(prefix) + prefix.length
+            let getUrl = url.substring(lastIndex)
+            getUrl = getUrl.endsWith("/") ? getUrl.slice(0, -1) : getUrl
+            return getUrl ? getUrl.replace(/^\//, "") : "index"
+        }
+
+        function renderList(items) {
+            const list = document.getElementById("indeks-list")
+            if (!list) return
+
+            list.innerHTML = items
+                .map(
+                    (item) =>
+                        `<li><a href="${BASE_URL}${item.path}" class="block px-3 py-2 hover:underline">${item.url}</a></li>`
+                )
+                .join("")
+        }
+
+        function renderError(message) {
+            const list = document.getElementById("indeks-list")
+            if (!list) return
+            list.innerHTML = `<li class="px-3 py-2 text-red-500">Error: ${message}</li>`
+        }
+
+        fetch(`${BASE_URL}/sitemap-0.xml`)
+            .then(function (response) {
+                if (!response.ok) {
+                    throw new Error("HTTP error! Status: " + response.status)
+                }
+                return response.text()
+            })
+            .then(function (xmlData) {
+                const parser = new DOMParser()
+                const xml = parser.parseFromString(xmlData, "application/xml")
+                const items = xml.getElementsByTagName("url")
+
+                const parsedData = Array.from(items)
+                    .map(function (item) {
+                        const loc = item.getElementsByTagName("loc")[0].textContent
+                        const extractedUrl = urlExtract(loc)
+                        return {
+                            originalLoc: loc,
+                            url: extractedUrl,
+                            path: extractedUrl === "index" ? "" : "/" + extractedUrl,
+                        }
+                    })
+                    .filter(function (item) {
+                        return !excludeUrls.includes(item.url)
+                    })
+
+                const processedManualUrls = manualUrls.map(function (url) {
+                    return {
+                        originalLoc: url,
+                        url: url,
+                        path: url === "index" ? "" : "/" + url,
+                    }
+                })
+
+                renderList([...processedManualUrls, ...parsedData])
+            })
+            .catch(function (error) {
+                renderError(error.message)
+            })
+    })()
+</script>

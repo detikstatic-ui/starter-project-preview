@@ -1,5 +1,4 @@
 import alpinejs from "@astrojs/alpinejs"
-import react from "@astrojs/react"
 import sitemap from "@astrojs/sitemap"
 import tailwindcss from "@tailwindcss/vite"
 import { defineConfig } from "astro/config"
@@ -11,6 +10,14 @@ export default defineConfig({
         build: {
             cssCodeSplit: false,
         },
+        server: {
+            proxy: {
+                '^/(modules|widgets)/': {
+                    target: 'https://design.detik.com',
+                    changeOrigin: true,
+                },
+            },
+        },
         css: {
             preprocessorOptions: {
                 scss: {
@@ -20,7 +27,7 @@ export default defineConfig({
         },
         plugins: [tailwindcss()],
     },
-    integrations: [sitemap(), react(), alpinejs({ entrypoint: "/src/entrypoint" })],
+    integrations: [sitemap(), alpinejs({ entrypoint: "/src/entrypoint" })],
     build: {
         assets: "_assets",
         inlineStylesheets: "never",

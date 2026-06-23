@@ -1,0 +1,23 @@
+---
+import type { SvgComponent } from "astro/types"
+import type { HTMLAttributes } from "astro/types"
+
+const icons = import.meta.glob<{ default: SvgComponent }>("../icons/*.svg", { eager: true })
+
+const names: Record<string, SvgComponent> = Object.fromEntries(
+    Object.entries(icons).map(([path, mod]) => [path.match(/([^/]+)\.svg$/)![1], mod.default]),
+)
+
+export type IconName = string
+
+interface Props extends Omit<HTMLAttributes<"svg">, "name"> {
+    name: IconName
+}
+
+const { name, ...attrs } = Astro.props
+
+const Svg = names[name]
+if (!Svg) throw new Error(`Icon "${name}" not found in src/icons/. Available: ${Object.keys(names).join(", ")}`)
+---
+
+<Svg {...attrs} />
