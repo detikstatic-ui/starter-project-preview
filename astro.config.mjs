@@ -2,6 +2,10 @@ import alpinejs from "@astrojs/alpinejs"
 import sitemap from "@astrojs/sitemap"
 import tailwindcss from "@tailwindcss/vite"
 import { defineConfig } from "astro/config"
+import { loadEnv } from "vite"
+
+// Optional .htaccess credentials for the dev proxy (see .env.example)
+const { PROXY_USER, PROXY_PASS } = loadEnv(process.env.NODE_ENV ?? "development", process.cwd(), "PROXY_")
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,6 +19,7 @@ export default defineConfig({
                 '^/(modules|widgets)/': {
                     target: 'https://design.detik.com',
                     changeOrigin: true,
+                    ...(PROXY_USER && PROXY_PASS && { auth: `${PROXY_USER}:${PROXY_PASS}` }),
                 },
             },
         },
